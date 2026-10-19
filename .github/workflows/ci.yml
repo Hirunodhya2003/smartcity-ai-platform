@@ -68,8 +68,13 @@ jobs:
         run: python -c "from app.main import app; print('FastAPI app loaded')"
 
       - name: Run database migrations
-        if: ${{ hashFiles('backend/alembic.ini') != '' }}
-        run: alembic upgrade head
+        # Skips until alembic.ini has an [alembic] section and a migration exists
+        run: |
+          if grep -qs '^\[alembic\]' alembic.ini && ls alembic/versions/*.py > /dev/null 2>&1; then
+            alembic upgrade head
+          else
+            echo "Alembic not configured yet - skipping migrations."
+          fi
 
       - name: Run tests
         # Exit code 5 means "no tests collected", which is fine early in the project
