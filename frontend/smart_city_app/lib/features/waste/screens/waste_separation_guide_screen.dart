@@ -1,19 +1,20 @@
+import 'package:smart_city_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class WasteSeparationGuideScreen extends StatelessWidget {
   const WasteSeparationGuideScreen({super.key});
 
-  static const _blue = Color(0xFF2563EB);
-  static const _navy = Color(0xFF102A56);
-  static const _muted = Color(0xFF64748B);
+  static const _blue = AppColors.primary;
+  static const _navy = AppColors.text;
+  static const _muted = AppColors.muted;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEEF5FF),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Waste separation guide'),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.card,
         foregroundColor: _navy,
         surfaceTintColor: Colors.transparent,
       ),
@@ -46,7 +47,7 @@ class WasteSeparationGuideScreen extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE2EDFF),
+                    color: AppColors.lightBlue,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -163,12 +164,12 @@ class WasteSeparationGuideScreen extends StatelessWidget {
   }) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      color: Colors.white,
+      color: AppColors.card,
       surfaceTintColor: Colors.transparent,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: Color(0xFFD5E3FA)),
+        side: const BorderSide(color: AppColors.border),
       ),
       child: ExpansionTile(
         leading: Icon(icon, color: _blue),
