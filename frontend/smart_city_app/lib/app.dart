@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/app_colors.dart';
+import 'features/traffic/screens/traffic_problems_screen.dart';
 
 class SmartCityApp extends StatelessWidget {
   const SmartCityApp({super.key});
@@ -207,7 +208,7 @@ class AppHomePage extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: OverviewCard(
@@ -215,6 +216,11 @@ class AppHomePage extends StatelessWidget {
                     value: 'Monitoring',
                     icon: Icons.traffic,
                     color: AppColors.primary,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const TrafficProblemsScreen(),
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -271,6 +277,7 @@ class OverviewCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final VoidCallback? onTap;
 
   const OverviewCard({
     super.key,
@@ -278,14 +285,18 @@ class OverviewCard extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -318,6 +329,7 @@ class OverviewCard extends StatelessWidget {
               ),
             ),
           ],
+          ),
         ),
       ),
     );
