@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.api.v1.endpoints.traffic import router as traffic_router
 
 app = FastAPI(
     title="Smart City AI Platform API",
@@ -6,6 +9,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Local Flutter Web development only. Review origin policy before deploying.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
+# Member 2 traffic endpoints. Other modules can register their own routers later.
+app.include_router(traffic_router)
 
 @app.get("/")
 def root():
