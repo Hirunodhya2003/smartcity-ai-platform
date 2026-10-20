@@ -1,3 +1,4 @@
+import 'package:smart_city_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CollectionInformationScreen extends StatefulWidget {
@@ -12,9 +13,9 @@ class _CollectionInformationScreenState
     extends State<CollectionInformationScreen> {
   String _selectedArea = 'Colombo 07';
 
-  static const _blue = Color(0xFF2563EB);
-  static const _navy = Color(0xFF102A56);
-  static const _muted = Color(0xFF64748B);
+  static const _blue = AppColors.primary;
+  static const _navy = AppColors.text;
+  static const _muted = AppColors.muted;
 
   static const List<Map<String, String>> _schedules = [
     {
@@ -74,10 +75,10 @@ class _CollectionInformationScreenState
         .toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEEF5FF),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Collection information'),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.card,
         foregroundColor: _navy,
         surfaceTintColor: Colors.transparent,
       ),
@@ -123,7 +124,7 @@ class _CollectionInformationScreenState
                     labelText: 'Select area',
                     prefixIcon: const Icon(Icons.location_on_outlined),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.card,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -179,7 +180,7 @@ class _CollectionInformationScreenState
                   width: double.infinity,
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.card,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Text(
@@ -206,9 +207,9 @@ class _CollectionInformationScreenState
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFD5E3FA)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
