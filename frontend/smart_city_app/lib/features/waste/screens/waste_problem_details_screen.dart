@@ -1,5 +1,5 @@
+import 'package:smart_city_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-
 
 class WasteProblemDetailsScreen extends StatelessWidget {
   final Map<String, String> issue;
@@ -8,14 +8,14 @@ class WasteProblemDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const navy = Color(0xFF102A56);
-    const blue = Color(0xFF2563EB);
+    const navy = AppColors.text;
+    const blue = AppColors.primary;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEEF5FF),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Waste issue details'),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.card,
         foregroundColor: navy,
         surfaceTintColor: Colors.transparent,
       ),
@@ -47,7 +47,7 @@ class WasteProblemDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 const Text(
                   'Preview • Sample data',
-                  style: TextStyle(color: Color(0xFF64748B), fontSize: 12),
+                  style: TextStyle(color: AppColors.muted, fontSize: 12),
                 ),
                 const SizedBox(height: 24),
                 _detailCard(
@@ -118,22 +118,22 @@ class WasteProblemDetailsScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFD5E3FA)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: const Color(0xFF2563EB), size: 22),
+              Icon(icon, color: AppColors.primary, size: 22),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   title,
                   style: const TextStyle(
-                    color: Color(0xFF102A56),
+                    color: AppColors.text,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -145,7 +145,7 @@ class WasteProblemDetailsScreen extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              color: Color(0xFF64748B),
+              color: AppColors.muted,
               fontSize: 14,
               height: 1.5,
             ),
