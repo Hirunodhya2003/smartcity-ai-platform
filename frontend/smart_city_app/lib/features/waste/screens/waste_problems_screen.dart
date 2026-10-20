@@ -1,7 +1,10 @@
+import 'package:smart_city_app/features/notifications/screens/notifications_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_city_app/core/theme/app_colors.dart';
 import 'collection_information_screen.dart';
 import 'waste_problem_details_screen.dart';
 import 'waste_separation_guide_screen.dart';
+import 'recycling_information_screen.dart';
 
 class WasteProblemsScreen extends StatefulWidget {
   const WasteProblemsScreen({super.key});
@@ -11,10 +14,10 @@ class WasteProblemsScreen extends StatefulWidget {
 }
 
 class _WasteProblemsScreenState extends State<WasteProblemsScreen> {
-  static const _blue = Color(0xFF2563EB);
-  static const _navy = Color(0xFF102A56);
-  static const _muted = Color(0xFF64748B);
-  static const _border = Color(0xFFD5E3FA);
+  static const _blue = AppColors.primary;
+  static const _navy = AppColors.text;
+  static const _muted = AppColors.muted;
+  static const _border = AppColors.border;
 
   final _searchController = TextEditingController();
 
@@ -188,6 +191,20 @@ class _WasteProblemsScreenState extends State<WasteProblemsScreen> {
       backgroundColor: const Color(0xFFEEF5FF),
       appBar: AppBar(
         title: const Text('Waste'),
+        actions: [
+          IconButton(
+            tooltip: 'Notifications',
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const NotificationsScreen(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
         foregroundColor: _navy,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
@@ -244,6 +261,21 @@ class _WasteProblemsScreenState extends State<WasteProblemsScreen> {
                   icon: const Icon(Icons.recycling),
                   label: const Text('Waste separation guide'),
                 ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (context) =>
+                            const RecyclingInformationScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.eco_outlined),
+                  label: const Text('Recycling information'),
+                ),
+                const SizedBox(height: 8),
+
                 const SizedBox(height: 8),
                 const Text(
                   'Manage collection schedules, missed pickups, '
