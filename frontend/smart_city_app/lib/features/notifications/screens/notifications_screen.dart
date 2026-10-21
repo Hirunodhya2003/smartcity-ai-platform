@@ -4,6 +4,7 @@ import 'package:smart_city_app/core/theme/app_colors.dart';
 import '../providers/notification_provider.dart';
 import '../widgets/notification_card.dart';
 import 'notification_details_screen.dart';
+import 'notification_preferences_screen.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -27,10 +28,29 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('Notifications')),
+      appBar: AppBar(
+        title: const Text('Notifications'),
+        actions: [
+          IconButton(
+            tooltip: 'Notification preferences',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const NotificationPreferencesScreen(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: ListenableBuilder(
         listenable: _provider,
         builder: (context, child) {
+          if (_provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final items = _provider.notifications.where((item) {
             return !_unreadOnly || !item.isRead;
           }).toList();
@@ -43,6 +63,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (_provider.storageError != null) ...[
+                      Text(
+                        _provider.storageError!,
+                        style: const TextStyle(color: AppColors.error),
+                      ),
+                      Wrap(
+                        spacing: 8,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              _provider.loadReadStatus();
+                            },
+                            child: const Text('Retry loading'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _provider.saveReadStatus();
+                            },
+                            child: const Text('Retry saving'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                    ],
                     const Text(
                       'Your updates',
                       style: TextStyle(
@@ -57,8 +101,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       style: const TextStyle(color: AppColors.muted),
                     ),
                     const SizedBox(height: 12),
-                    const Chip(label: Text('Preview • Sample data')),
-                    const SizedBox(height: 12),
+
                     Wrap(
                       spacing: 12,
                       runSpacing: 8,
