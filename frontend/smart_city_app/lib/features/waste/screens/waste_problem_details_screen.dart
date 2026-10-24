@@ -65,7 +65,7 @@ class WasteProblemDetailsScreen extends StatelessWidget {
                 _detailCard(
                   icon: Icons.description_outlined,
                   title: 'Description',
-                  value: _descriptionFor(issue['id']),
+                  value: issue['description'] ?? _descriptionFor(issue['id']),
                 ),
                 const SizedBox(height: 12),
                 _detailCard(
