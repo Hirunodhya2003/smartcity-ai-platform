@@ -1,4 +1,5 @@
 import '../models/energy_issue_model.dart';
+import '../models/water_issue_model.dart';
 
 class EnergyWaterService {
   // TODO: replace mock data with real API call
@@ -15,7 +16,8 @@ class EnergyWaterService {
       EnergyIssue(
         id: 1,
         title: 'Streetlight not working',
-        description: 'Streetlight near the main junction is off since last night.',
+        description:
+            'Streetlight near the main junction is off since last night.',
         category: 'energy',
         status: 'reported',
         priority: 'medium',
@@ -57,6 +59,72 @@ class EnergyWaterService {
       final matchStatus = status == null || i.status == status;
       final matchPriority = priority == null || i.priority == priority;
       return matchSearch && matchStatus && matchPriority;
+    }).toList();
+  }
+
+  // TODO: replace mock data with real API call
+  // GET /api/v1/issues?category=water
+  Future<List<WaterIssue>> fetchWaterIssues({
+    String? search,
+    String? status,
+    String? priority,
+    bool leakageOnly = false,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    final now = DateTime.now();
+    final all = <WaterIssue>[
+      WaterIssue(
+        id: 11,
+        title: 'Burst water pipe',
+        description: 'Water is gushing onto the road near the bus stand.',
+        category: 'water',
+        status: 'reported',
+        priority: 'high',
+        createdAt: now.subtract(const Duration(hours: 3)),
+        updatedAt: now,
+        latitude: 7.2094,
+        longitude: 79.8386,
+        address: 'Bus Stand Road',
+        city: 'Negombo',
+        isLeakage: true,
+      ),
+      WaterIssue(
+        id: 12,
+        title: 'No water supply',
+        description: 'No water in the area since morning.',
+        category: 'water',
+        status: 'in_progress',
+        priority: 'medium',
+        createdAt: now.subtract(const Duration(days: 1)),
+        updatedAt: now,
+        city: 'Colombo',
+      ),
+      WaterIssue(
+        id: 13,
+        title: 'Slow leak near school',
+        description: 'Small continuous leak from a pipe joint.',
+        category: 'water',
+        status: 'resolved',
+        priority: 'low',
+        createdAt: now.subtract(const Duration(days: 5)),
+        updatedAt: now,
+        latitude: 7.2051,
+        longitude: 79.8420,
+        address: 'School Lane',
+        city: 'Negombo',
+        isLeakage: true,
+      ),
+    ];
+
+    return all.where((i) {
+      final matchSearch = search == null ||
+          search.isEmpty ||
+          i.title.toLowerCase().contains(search.toLowerCase());
+      final matchStatus = status == null || i.status == status;
+      final matchPriority = priority == null || i.priority == priority;
+      final matchLeak = !leakageOnly || i.isLeakage;
+      return matchSearch && matchStatus && matchPriority && matchLeak;
     }).toList();
   }
 }

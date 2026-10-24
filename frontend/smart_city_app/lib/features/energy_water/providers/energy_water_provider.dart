@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../models/energy_issue_model.dart';
+import '../models/water_issue_model.dart';
 import '../services/energy_water_service.dart';
 
 class EnergyWaterProvider extends ChangeNotifier {
@@ -55,5 +56,54 @@ class EnergyWaterProvider extends ChangeNotifier {
   void setPriority(String? value) {
     _priority = value;
     loadEnergyIssues();
+  }
+
+    // ---------- Water ----------
+  List<WaterIssue> _waterIssues = [];
+  bool _waterLoading = false;
+  String? _waterError;
+  String _waterSearch = '';
+  String? _waterStatus;
+  String? _waterPriority;
+
+  List<WaterIssue> get waterIssues => _waterIssues;
+  bool get waterLoading => _waterLoading;
+  String? get waterError => _waterError;
+  String? get waterStatus => _waterStatus;
+  String? get waterPriority => _waterPriority;
+
+  Future<void> loadWaterIssues({bool leakageOnly = false}) async {
+    _waterLoading = true;
+    _waterError = null;
+    notifyListeners();
+
+    try {
+      _waterIssues = await _service.fetchWaterIssues(
+        search: _waterSearch,
+        status: _waterStatus,
+        priority: _waterPriority,
+        leakageOnly: leakageOnly,
+      );
+    } catch (e) {
+      _waterError = 'Failed to load water reports';
+    } finally {
+      _waterLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void setWaterSearch(String value) {
+    _waterSearch = value;
+    loadWaterIssues();
+  }
+
+  void setWaterStatus(String? value) {
+    _waterStatus = value;
+    loadWaterIssues();
+  }
+
+  void setWaterPriority(String? value) {
+    _waterPriority = value;
+    loadWaterIssues();
   }
 }
